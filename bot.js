@@ -1,9 +1,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, MessageFlags } = require('discord.js');
-const config = require('./config.json');
+const { getRequiredEnv } = require('./lib/env');
 const { closePool } = require('./data/db');
 
+const token = getRequiredEnv('DISCORD_TOKEN');
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.commands = new Collection();
 
@@ -51,8 +52,4 @@ for (const signal of ['SIGINT', 'SIGTERM']) {
   });
 }
 
-if (!config.token || config.token.includes('YOUR_DISCORD_BOT_TOKEN')) {
-  throw new Error('Please set a valid bot token in config.json before starting the bot.');
-}
-
-client.login(config.token);
+client.login(token);

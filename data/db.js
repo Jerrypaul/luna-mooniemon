@@ -1,32 +1,23 @@
-const config = require('../config.json');
 const { Pool } = require('pg');
+const { getBooleanEnv, getRequiredEnv, getSchemaName } = require('../lib/env');
 
 let pool;
 
 function getDatabaseConfig() {
-  const databaseUrl = process.env.DATABASE_URL || config.databaseUrl;
-
-  if (!databaseUrl) {
-    throw new Error('Please set DATABASE_URL or config.databaseUrl before starting the bot.');
-  }
+  const databaseUrl = getRequiredEnv('DATABASE_URL');
 
   return {
     connectionString: databaseUrl,
-    ssl: shouldUseSsl() ? { rejectUnauthorized: false } : false
+    ssl: getBooleanEnv('DATABASE_SSL', false) ? { rejectUnauthorized: false } : false
   };
-}
-
-function shouldUseSsl() {
-  if (typeof process.env.DATABASE_SSL === 'string') {
-    return process.env.DATABASE_SSL === 'true';
-  }
-
-  return Boolean(config.databaseSsl);
 }
 
 function getPool() {
   if (!pool) {
     pool = new Pool(getDatabaseConfig());
+    pool.on('connect', async (client) => {
+      await client.query(`SET search_path TO ${getSchemaName()}, public`);
+    });
   }
 
   return pool;

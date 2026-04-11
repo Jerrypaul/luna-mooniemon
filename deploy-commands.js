@@ -1,8 +1,11 @@
-﻿const fs = require('node:fs');
+const fs = require('node:fs');
 const path = require('node:path');
 const { REST, Routes } = require('discord.js');
-const config = require('./config.json');
+const { getOptionalEnv, getRequiredEnv } = require('./lib/env');
 
+const token = getRequiredEnv('DISCORD_TOKEN');
+const clientId = getRequiredEnv('DISCORD_CLIENT_ID');
+const guildId = getOptionalEnv('DISCORD_GUILD_ID');
 const commands = [];
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
@@ -15,29 +18,21 @@ for (const file of commandFiles) {
   }
 }
 
-if (!config.token || config.token.includes('YOUR_DISCORD_BOT_TOKEN')) {
-  throw new Error('Please set a valid bot token in config.json before deploying commands.');
-}
-
-if (!config.clientId || config.clientId.includes('YOUR_DISCORD_APPLICATION_CLIENT_ID')) {
-  throw new Error('Please set a valid clientId in config.json before deploying commands.');
-}
-
-const rest = new REST().setToken(config.token);
+const rest = new REST().setToken(token);
 
 (async () => {
   try {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-    if (config.guildId && !config.guildId.includes('YOUR_DISCORD_TEST_GUILD_ID')) {
+    if (guildId) {
       await rest.put(
-        Routes.applicationGuildCommands(config.clientId, config.guildId),
+        Routes.applicationGuildCommands(clientId, guildId),
         { body: commands }
       );
       console.log('Successfully reloaded guild (/) commands.');
     } else {
       await rest.put(
-        Routes.applicationCommands(config.clientId),
+        Routes.applicationCommands(clientId),
         { body: commands }
       );
       console.log('Successfully reloaded global (/) commands.');
