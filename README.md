@@ -1,12 +1,14 @@
 # Mooniemon
 
-Mooniemon is a `discord.js` v14 bot for running a guild-scoped trading card collector system in Discord. Each Discord server has its own card pool, pull cooldowns, and user collections, all backed by Postgres.
+Mooniemon is a `discord.js` v14 bot for running a guild-scoped trading card collector system in Discord. It also includes a lightweight message-based leveling system for Luna's community server. All persistent data is backed by Postgres.
 
 ## Features
 
 - Slash commands: `/pull` and `/view`
 - Per-server game isolation using `interaction.guildId`
 - Weighted rarity pulls with duplicate cards allowed
+- Lightweight leveling worker for Luna's community server
+- XP persistence, level thresholds, and automatic role rewards
 - Postgres-backed storage for cards, guild settings, users, and card instances
 - JSON import flow for seeding cards into a server
 - Schema prepared for future battle support with persistent HP and holo variants
@@ -32,6 +34,11 @@ Optional:
 - `DISCORD_GUILD_ID`
 - `DATABASE_SSL`
 - `DATABASE_SCHEMA`
+- `LEVELING_GUILD_ID`
+- `LEVELING_IGNORED_CHANNEL_IDS`
+- `LEVELING_VERIFIED_ROLE_ID`
+- `LEVELING_REGULAR_ROLE_ID`
+- `LEVELING_STARLIGHT_ROLE_ID`
 
 Recommended shared-database setup:
 
@@ -70,6 +77,15 @@ Start the bot:
 npm start
 ```
 
+## Discord App Setup
+
+Enable these gateway intents for the bot:
+
+- `Server Members Intent`
+- `Message Content Intent`
+
+The worker needs those intents because the leveling system reads message content and awards roles when users level up.
+
 ## Render Deployment
 
 Set these environment variables in Render:
@@ -80,6 +96,11 @@ Set these environment variables in Render:
 - `DATABASE_URL`
 - `DATABASE_SSL`
 - `DATABASE_SCHEMA=mooniemon`
+- `LEVELING_GUILD_ID`
+- `LEVELING_IGNORED_CHANNEL_IDS`
+- `LEVELING_VERIFIED_ROLE_ID`
+- `LEVELING_REGULAR_ROLE_ID`
+- `LEVELING_STARLIGHT_ROLE_ID`
 
 Suggested deploy flow:
 
@@ -100,6 +121,8 @@ The bot uses these core tables:
 - `cards`
 - `guild_users`
 - `user_card_instances`
+- `guild_leveling_profiles`
+- `leveling_message_hashes`
 
 Design notes:
 
@@ -107,6 +130,7 @@ Design notes:
 - Pull cooldowns are stored per guild user
 - Each pull creates a `user_card_instances` row, so duplicates are naturally supported
 - HP and holo flags live in persistent storage for future battle features
+- Leveling profiles and duplicate message hashes are stored separately from Mooniemon card data
 
 ## Card Seeding
 
@@ -132,6 +156,27 @@ The import script:
 
 - shows the user's collection for the current server only
 - supports `card:<name>` to inspect a specific card from that server's pool
+
+## Leveling System
+
+The leveling logic runs in the same worker process as Mooniemon but is kept separate in its own service and repository modules.
+
+V1 rules:
+
+- only real users count, never bots
+- only messages in `LEVELING_GUILD_ID` count
+- minimum message length is 8 characters
+- attachments-only messages do not count
+- duplicate or repeated normalized messages do not count
+- ignored channels do not count
+- each user has a 60 second XP cooldown
+- valid messages award a random 15 to 25 XP
+
+Current role rewards:
+
+- Level 3: Verified
+- Level 5: Regular
+- Level 10: Starlight
 
 ## Repo Notes
 

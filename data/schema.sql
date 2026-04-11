@@ -53,7 +53,31 @@ CREATE TABLE IF NOT EXISTS user_card_instances (
   obtained_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE IF NOT EXISTS guild_leveling_profiles (
+  id BIGSERIAL PRIMARY KEY,
+  guild_id BIGINT NOT NULL REFERENCES guilds(id) ON DELETE CASCADE,
+  discord_user_id TEXT NOT NULL,
+  username TEXT NOT NULL,
+  xp INTEGER NOT NULL DEFAULT 0,
+  level INTEGER NOT NULL DEFAULT 0,
+  last_xp_message_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (guild_id, discord_user_id)
+);
+
+CREATE TABLE IF NOT EXISTS leveling_message_hashes (
+  id BIGSERIAL PRIMARY KEY,
+  guild_id BIGINT NOT NULL REFERENCES guilds(id) ON DELETE CASCADE,
+  discord_user_id TEXT NOT NULL,
+  content_hash TEXT NOT NULL,
+  source_message_id TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 CREATE INDEX IF NOT EXISTS idx_cards_guild_id ON cards (guild_id);
 CREATE INDEX IF NOT EXISTS idx_cards_guild_rarity ON cards (guild_id, rarity);
 CREATE INDEX IF NOT EXISTS idx_guild_users_scope ON guild_users (guild_id, discord_user_id);
 CREATE INDEX IF NOT EXISTS idx_user_card_instances_user ON user_card_instances (guild_user_id);
+CREATE INDEX IF NOT EXISTS idx_leveling_profiles_scope ON guild_leveling_profiles (guild_id, discord_user_id);
+CREATE INDEX IF NOT EXISTS idx_leveling_hashes_lookup ON leveling_message_hashes (guild_id, discord_user_id, content_hash);

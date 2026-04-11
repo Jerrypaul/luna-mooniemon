@@ -3,9 +3,17 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, MessageFlags } = require('discord.js');
 const { getRequiredEnv } = require('./lib/env');
 const { closePool } = require('./data/db');
+const { handleMessageForLeveling } = require('./services/leveling-service');
 
 const token = getRequiredEnv('DISCORD_TOKEN');
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.MessageContent
+  ]
+});
 client.commands = new Collection();
 
 const commandsPath = path.join(__dirname, 'commands');
@@ -24,6 +32,14 @@ for (const file of commandFiles) {
 
 client.once(Events.ClientReady, (readyClient) => {
   console.log(`Logged in as ${readyClient.user.tag}`);
+});
+
+client.on(Events.MessageCreate, async (message) => {
+  try {
+    await handleMessageForLeveling(message);
+  } catch (error) {
+    console.error('Leveling handler error:', error);
+  }
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
