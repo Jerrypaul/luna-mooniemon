@@ -1,0 +1,20 @@
+{
+  "name": "mooniemon",
+  "version": "1.0.0",
+  "description": "Mooniemon Discord trading card collector bot",
+  "main": "bot.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node bot.js",
+    "deploy": "node deploy-commands.js",
+    "db:init": "node scripts/init-db.js",
+    "cards:import": "node scripts/import-cards.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "discord.js": "^14.21.0",
+    "pg": "^8.20.0"
+  }
+}

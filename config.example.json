@@ -1,0 +1,7 @@
+{
+  "token": "YOUR_DISCORD_BOT_TOKEN",
+  "clientId": "YOUR_DISCORD_APPLICATION_CLIENT_ID",
+  "guildId": "YOUR_DISCORD_TEST_GUILD_ID",
+  "databaseUrl": "postgres://postgres:postgres@localhost:5432/mooniemon",
+  "databaseSsl": false
+}
