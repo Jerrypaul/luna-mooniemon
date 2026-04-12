@@ -5,9 +5,11 @@ let pool;
 
 function getDatabaseConfig() {
   const databaseUrl = getRequiredEnv('DATABASE_URL');
+  const schemaName = getSchemaName();
 
   return {
     connectionString: databaseUrl,
+    options: `-c search_path=${schemaName},public`,
     ssl: getBooleanEnv('DATABASE_SSL', false) ? { rejectUnauthorized: false } : false
   };
 }
@@ -15,9 +17,6 @@ function getDatabaseConfig() {
 function getPool() {
   if (!pool) {
     pool = new Pool(getDatabaseConfig());
-    pool.on('connect', async (client) => {
-      await client.query(`SET search_path TO ${getSchemaName()}, public`);
-    });
   }
 
   return pool;
