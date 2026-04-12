@@ -112,6 +112,19 @@ Suggested deploy flow:
 6. Run `npm run deploy` to register slash commands.
 7. Start the bot with `npm start`.
 
+## Branch Workflow
+
+Recommended branch usage:
+
+- `main` is the production branch
+- `staging` is the working branch for future updates
+
+Suggested flow:
+
+1. Make changes on `staging`.
+2. Test there first.
+3. Merge `staging` into `main` only when you want Render to deploy.
+
 ## Database Model
 
 The bot uses these core tables:
