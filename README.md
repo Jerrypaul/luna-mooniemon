@@ -1,13 +1,13 @@
 # Mooniemon
 
-Mooniemon is a `discord.js` v14 bot for running a guild-scoped trading card collector system in Discord. It also includes a lightweight message-based leveling system for Luna's community server. All persistent data is backed by Postgres.
+Mooniemon is a `discord.js` v14 bot for running a guild-scoped trading card collector system in Discord. It also includes a lightweight message-based leveling system that can be enabled per server. All persistent data is backed by Postgres.
 
 ## Features
 
 - Slash commands: `/pull` and `/view`
 - Per-server game isolation using `interaction.guildId`
 - Weighted rarity pulls with duplicate cards allowed
-- Lightweight leveling worker for Luna's community server
+- Lightweight leveling worker that can run across multiple Discord servers
 - XP persistence, level thresholds, automatic role rewards, and role backfill support
 - Postgres-backed storage for cards, guild settings, users, and card instances
 - JSON import flow for seeding cards into a server
@@ -34,12 +34,6 @@ Optional:
 - `DISCORD_GUILD_ID`
 - `DATABASE_SSL`
 - `DATABASE_SCHEMA`
-- `LEVELING_GUILD_ID`
-- `LEVELING_IGNORED_CHANNEL_IDS`
-- `LEVELING_LEVEL_1_ROLE_ID`
-- `LEVELING_VERIFIED_ROLE_ID`
-- `LEVELING_REGULAR_ROLE_ID`
-- `LEVELING_STARLIGHT_ROLE_ID`
 
 Recommended shared-database setup:
 
@@ -66,6 +60,12 @@ Import cards for a Discord server:
 npm run cards:import -- --guildId=YOUR_DISCORD_SERVER_ID --guildName="Your Server Name"
 ```
 
+Configure leveling for a Discord server:
+
+```bash
+npm run leveling:configure -- --guildId=YOUR_DISCORD_SERVER_ID --guildName="Your Server Name" --enabled=true --ignoredChannels=CHANNEL_ID_ONE,CHANNEL_ID_TWO --level1RoleId=ROLE_ID_LEVEL_1 --verifiedRoleId=ROLE_ID_LEVEL_3
+```
+
 Deploy slash commands:
 
 ```bash
@@ -82,6 +82,12 @@ Backfill leveling roles for existing members:
 
 ```bash
 npm run leveling:sync-roles
+```
+
+Target one guild only during backfill:
+
+```bash
+npm run leveling:sync-roles -- --guildId=YOUR_DISCORD_SERVER_ID
 ```
 
 ## Discord App Setup
@@ -103,12 +109,6 @@ Set these environment variables in Render:
 - `DATABASE_URL`
 - `DATABASE_SSL`
 - `DATABASE_SCHEMA=mooniemon`
-- `LEVELING_GUILD_ID`
-- `LEVELING_IGNORED_CHANNEL_IDS`
-- `LEVELING_LEVEL_1_ROLE_ID`
-- `LEVELING_VERIFIED_ROLE_ID`
-- `LEVELING_REGULAR_ROLE_ID`
-- `LEVELING_STARLIGHT_ROLE_ID`
 
 Suggested deploy flow:
 
@@ -117,9 +117,10 @@ Suggested deploy flow:
 3. Run `npm install` during build.
 4. Run `npm run db:init` once against the target database.
 5. Run `npm run cards:import -- --guildId=... --guildName="..."` for each server you want to seed.
-6. Run `npm run deploy` to register slash commands.
-7. Start the bot with `npm start`.
-8. Run `npm run leveling:sync-roles` when you add or change role thresholds and want to backfill existing members.
+6. Run `npm run leveling:configure -- --guildId=... --guildName="..." --enabled=true ...` for each server where leveling should be active.
+7. Run `npm run deploy` to register slash commands.
+8. Start the bot with `npm start`.
+9. Run `npm run leveling:sync-roles` when you add or change role thresholds and want to backfill existing members.
 
 ## Branch Workflow
 
@@ -140,6 +141,7 @@ The bot uses these core tables:
 
 - `guilds`
 - `guild_settings`
+- `guild_leveling_settings`
 - `cards`
 - `guild_users`
 - `user_card_instances`
@@ -152,7 +154,7 @@ Design notes:
 - Pull cooldowns are stored per guild user
 - Each pull creates a `user_card_instances` row, so duplicates are naturally supported
 - HP and holo flags live in persistent storage for future battle features
-- Leveling profiles and duplicate message hashes are stored separately from Mooniemon card data
+- Leveling settings, profiles, and duplicate message hashes are stored per guild
 
 ## Card Seeding
 
@@ -186,24 +188,25 @@ The leveling logic runs in the same worker process as Mooniemon but is kept sepa
 V1 rules:
 
 - only real users count, never bots
-- only messages in `LEVELING_GUILD_ID` count
+- each guild can enable leveling independently
 - minimum message length is 8 characters
 - attachments-only messages do not count
 - duplicate or repeated normalized messages do not count
-- ignored channels do not count
+- ignored channels are configured per guild
 - each user has a 60 second XP cooldown
 - valid messages award a random 15 to 25 XP
 
-Current role rewards:
+Current supported role thresholds:
 
-- Level 1: Starter
-- Level 3: Verified
-- Level 5: Regular
-- Level 10: Starlight
+- Level 1
+- Level 3
+- Level 5
+- Level 10
 
 Backfill behavior:
 
 - `npm run leveling:sync-roles` checks stored levels in Postgres
+- it can sync all enabled guilds or one guild at a time
 - it fetches matching guild members from Discord
 - it assigns any configured missing roles for members already at or above each threshold
 

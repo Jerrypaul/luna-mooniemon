@@ -63,6 +63,16 @@ async function getProfilesByGuildId(guildId) {
   return result.rows.map(mapProfile);
 }
 
+async function getLevelingGuildsWithProfiles() {
+  const result = await query(
+    `SELECT DISTINCT guild_id
+     FROM guild_leveling_profiles
+     ORDER BY guild_id ASC`
+  );
+
+  return result.rows.map((row) => row.guild_id);
+}
+
 function mapProfile(row) {
   return {
     id: row.id,
@@ -80,5 +90,6 @@ module.exports = {
   hasRecentDuplicateMessage,
   recordMessageHash,
   awardXp,
-  getProfilesByGuildId
+  getProfilesByGuildId,
+  getLevelingGuildsWithProfiles
 };

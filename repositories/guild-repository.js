@@ -18,10 +18,28 @@ async function ensureGuild(discordGuildId, name) {
      ON CONFLICT (guild_id) DO NOTHING`,
     [guild.id, JSON.stringify(DEFAULT_WEIGHTS)]
   );
+  await query(
+    `INSERT INTO guild_leveling_settings (guild_id)
+     VALUES ($1)
+     ON CONFLICT (guild_id) DO NOTHING`,
+    [guild.id]
+  );
 
   return guild;
 }
 
+async function findGuildByDiscordId(discordGuildId) {
+  const result = await query(
+    `SELECT *
+     FROM guilds
+     WHERE discord_guild_id = $1`,
+    [discordGuildId]
+  );
+
+  return result.rows[0] || null;
+}
+
 module.exports = {
-  ensureGuild
+  ensureGuild,
+  findGuildByDiscordId
 };
