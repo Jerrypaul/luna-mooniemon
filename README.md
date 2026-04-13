@@ -8,7 +8,7 @@ Mooniemon is a `discord.js` v14 bot for running a guild-scoped trading card coll
 - Per-server game isolation using `interaction.guildId`
 - Weighted rarity pulls with duplicate cards allowed
 - Lightweight leveling worker for Luna's community server
-- XP persistence, level thresholds, and automatic role rewards
+- XP persistence, level thresholds, automatic role rewards, and role backfill support
 - Postgres-backed storage for cards, guild settings, users, and card instances
 - JSON import flow for seeding cards into a server
 - Schema prepared for future battle support with persistent HP and holo variants
@@ -36,6 +36,7 @@ Optional:
 - `DATABASE_SCHEMA`
 - `LEVELING_GUILD_ID`
 - `LEVELING_IGNORED_CHANNEL_IDS`
+- `LEVELING_LEVEL_1_ROLE_ID`
 - `LEVELING_VERIFIED_ROLE_ID`
 - `LEVELING_REGULAR_ROLE_ID`
 - `LEVELING_STARLIGHT_ROLE_ID`
@@ -62,7 +63,7 @@ npm run db:init
 Import cards for a Discord server:
 
 ```bash
-npm run cards:import -- --guildId=YOUR_DISCORD_SERVER_ID --guildName=\"Your Server Name\"
+npm run cards:import -- --guildId=YOUR_DISCORD_SERVER_ID --guildName="Your Server Name"
 ```
 
 Deploy slash commands:
@@ -75,6 +76,12 @@ Start the bot:
 
 ```bash
 npm start
+```
+
+Backfill leveling roles for existing members:
+
+```bash
+npm run leveling:sync-roles
 ```
 
 ## Discord App Setup
@@ -98,6 +105,7 @@ Set these environment variables in Render:
 - `DATABASE_SCHEMA=mooniemon`
 - `LEVELING_GUILD_ID`
 - `LEVELING_IGNORED_CHANNEL_IDS`
+- `LEVELING_LEVEL_1_ROLE_ID`
 - `LEVELING_VERIFIED_ROLE_ID`
 - `LEVELING_REGULAR_ROLE_ID`
 - `LEVELING_STARLIGHT_ROLE_ID`
@@ -108,9 +116,23 @@ Suggested deploy flow:
 2. Add the environment variables above.
 3. Run `npm install` during build.
 4. Run `npm run db:init` once against the target database.
-5. Run `npm run cards:import -- --guildId=... --guildName=\"...\"` for each server you want to seed.
+5. Run `npm run cards:import -- --guildId=... --guildName="..."` for each server you want to seed.
 6. Run `npm run deploy` to register slash commands.
 7. Start the bot with `npm start`.
+8. Run `npm run leveling:sync-roles` when you add or change role thresholds and want to backfill existing members.
+
+## Branch Workflow
+
+Recommended branch usage:
+
+- `main` is the production branch
+- `staging` is the working branch for future updates
+
+Suggested flow:
+
+1. Make changes on `staging`.
+2. Test there first.
+3. Merge `staging` into `main` only when you want Render to deploy.
 
 ## Database Model
 
@@ -174,9 +196,16 @@ V1 rules:
 
 Current role rewards:
 
+- Level 1: Starter
 - Level 3: Verified
 - Level 5: Regular
 - Level 10: Starlight
+
+Backfill behavior:
+
+- `npm run leveling:sync-roles` checks stored levels in Postgres
+- it fetches matching guild members from Discord
+- it assigns any configured missing roles for members already at or above each threshold
 
 ## Repo Notes
 
