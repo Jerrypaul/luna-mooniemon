@@ -13,6 +13,7 @@ const XP_COOLDOWN_MS = 60 * 1000;
 const MIN_XP_AWARD = 15;
 const MAX_XP_AWARD = 25;
 const ROLE_REWARDS = [
+  { level: 1, roleIdEnv: 'LEVELING_LEVEL_1_ROLE_ID', label: 'Level 1' },
   { level: 3, roleIdEnv: 'LEVELING_VERIFIED_ROLE_ID', label: 'Verified' },
   { level: 5, roleIdEnv: 'LEVELING_REGULAR_ROLE_ID', label: 'Regular' },
   { level: 10, roleIdEnv: 'LEVELING_STARLIGHT_ROLE_ID', label: 'Starlight' }

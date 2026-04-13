@@ -36,6 +36,7 @@ Optional:
 - `DATABASE_SCHEMA`
 - `LEVELING_GUILD_ID`
 - `LEVELING_IGNORED_CHANNEL_IDS`
+- `LEVELING_LEVEL_1_ROLE_ID`
 - `LEVELING_VERIFIED_ROLE_ID`
 - `LEVELING_REGULAR_ROLE_ID`
 - `LEVELING_STARLIGHT_ROLE_ID`
@@ -62,7 +63,7 @@ npm run db:init
 Import cards for a Discord server:
 
 ```bash
-npm run cards:import -- --guildId=YOUR_DISCORD_SERVER_ID --guildName=\"Your Server Name\"
+npm run cards:import -- --guildId=YOUR_DISCORD_SERVER_ID --guildName="Your Server Name"
 ```
 
 Deploy slash commands:
@@ -98,6 +99,7 @@ Set these environment variables in Render:
 - `DATABASE_SCHEMA=mooniemon`
 - `LEVELING_GUILD_ID`
 - `LEVELING_IGNORED_CHANNEL_IDS`
+- `LEVELING_LEVEL_1_ROLE_ID`
 - `LEVELING_VERIFIED_ROLE_ID`
 - `LEVELING_REGULAR_ROLE_ID`
 - `LEVELING_STARLIGHT_ROLE_ID`
@@ -108,7 +110,7 @@ Suggested deploy flow:
 2. Add the environment variables above.
 3. Run `npm install` during build.
 4. Run `npm run db:init` once against the target database.
-5. Run `npm run cards:import -- --guildId=... --guildName=\"...\"` for each server you want to seed.
+5. Run `npm run cards:import -- --guildId=... --guildName="..."` for each server you want to seed.
 6. Run `npm run deploy` to register slash commands.
 7. Start the bot with `npm start`.
 
@@ -187,6 +189,7 @@ V1 rules:
 
 Current role rewards:
 
+- Level 1: Starter
 - Level 3: Verified
 - Level 5: Regular
 - Level 10: Starlight
