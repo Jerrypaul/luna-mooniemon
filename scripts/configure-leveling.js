@@ -36,15 +36,40 @@ function parseCsv(value) {
   }
 
   const guild = await ensureGuild(String(discordGuildId), guildName);
+  const roleRewards = {};
+
+  if (args.level1RoleId !== undefined) {
+    roleRewards[1] = args.level1RoleId || null;
+  }
+
+  if (args.verifiedRoleId !== undefined) {
+    roleRewards[3] = args.verifiedRoleId || null;
+  }
+
+  if (args.regularRoleId !== undefined) {
+    roleRewards[5] = args.regularRoleId || null;
+  }
+
+  if (args.starlightRoleId !== undefined) {
+    roleRewards[10] = args.starlightRoleId || null;
+  }
+
+  const updateInput = {};
+
+  if (args.enabled !== undefined) {
+    updateInput.enabled = String(args.enabled) === 'true';
+  }
+
+  if (args.ignoredChannels !== undefined) {
+    updateInput.ignoredChannelIds = parseCsv(args.ignoredChannels);
+  }
+
+  if (Object.keys(roleRewards).length > 0) {
+    updateInput.roleRewards = roleRewards;
+  }
+
   const settings = await updateGuildLevelingSettings(guild.id, {
-    enabled: args.enabled === undefined ? true : String(args.enabled) === 'true',
-    ignoredChannelIds: parseCsv(args.ignoredChannels),
-    roleRewards: {
-      1: args.level1RoleId || null,
-      3: args.verifiedRoleId || null,
-      5: args.regularRoleId || null,
-      10: args.starlightRoleId || null
-    }
+    ...updateInput
   });
 
   console.log(`Configured leveling for guild ${discordGuildId}.`);
