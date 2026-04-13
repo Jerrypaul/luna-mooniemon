@@ -8,7 +8,7 @@ Mooniemon is a `discord.js` v14 bot for running a guild-scoped trading card coll
 - Per-server game isolation using `interaction.guildId`
 - Weighted rarity pulls with duplicate cards allowed
 - Lightweight leveling worker for Luna's community server
-- XP persistence, level thresholds, and automatic role rewards
+- XP persistence, level thresholds, automatic role rewards, and role backfill support
 - Postgres-backed storage for cards, guild settings, users, and card instances
 - JSON import flow for seeding cards into a server
 - Schema prepared for future battle support with persistent HP and holo variants
@@ -78,6 +78,12 @@ Start the bot:
 npm start
 ```
 
+Backfill leveling roles for existing members:
+
+```bash
+npm run leveling:sync-roles
+```
+
 ## Discord App Setup
 
 Enable these gateway intents for the bot:
@@ -113,6 +119,7 @@ Suggested deploy flow:
 5. Run `npm run cards:import -- --guildId=... --guildName="..."` for each server you want to seed.
 6. Run `npm run deploy` to register slash commands.
 7. Start the bot with `npm start`.
+8. Run `npm run leveling:sync-roles` when you add or change role thresholds and want to backfill existing members.
 
 ## Branch Workflow
 
@@ -193,6 +200,12 @@ Current role rewards:
 - Level 3: Verified
 - Level 5: Regular
 - Level 10: Starlight
+
+Backfill behavior:
+
+- `npm run leveling:sync-roles` checks stored levels in Postgres
+- it fetches matching guild members from Discord
+- it assigns any configured missing roles for members already at or above each threshold
 
 ## Repo Notes
 

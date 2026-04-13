@@ -51,6 +51,18 @@ async function awardXp(profileId, xpToAdd, lastXpMessageAt, nextLevel) {
   return mapProfile(result.rows[0]);
 }
 
+async function getProfilesByGuildId(guildId) {
+  const result = await query(
+    `SELECT *
+     FROM guild_leveling_profiles
+     WHERE guild_id = $1
+     ORDER BY level DESC, xp DESC, id ASC`,
+    [guildId]
+  );
+
+  return result.rows.map(mapProfile);
+}
+
 function mapProfile(row) {
   return {
     id: row.id,
@@ -67,5 +79,6 @@ module.exports = {
   getOrCreateLevelingProfile,
   hasRecentDuplicateMessage,
   recordMessageHash,
-  awardXp
+  awardXp,
+  getProfilesByGuildId
 };

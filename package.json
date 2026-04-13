@@ -8,7 +8,8 @@
     "start": "node bot.js",
     "deploy": "node deploy-commands.js",
     "db:init": "node scripts/init-db.js",
-    "cards:import": "node scripts/import-cards.js"
+    "cards:import": "node scripts/import-cards.js",
+    "leveling:sync-roles": "node scripts/sync-level-roles.js"
   },
   "engines": {
     "node": ">=18"

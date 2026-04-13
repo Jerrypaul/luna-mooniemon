@@ -1,5 +1,4 @@
 const crypto = require('node:crypto');
-const { getOptionalEnv, getRequiredEnv } = require('../lib/env');
 const { ensureGuild } = require('../repositories/guild-repository');
 const {
   getOrCreateLevelingProfile,
@@ -7,31 +6,12 @@ const {
   recordMessageHash,
   awardXp
 } = require('../repositories/leveling-repository');
+const { getConfiguredRoleRewards, getIgnoredChannelIds, getTargetGuildId } = require('../lib/leveling-config');
 
 const MIN_MESSAGE_LENGTH = 8;
 const XP_COOLDOWN_MS = 60 * 1000;
 const MIN_XP_AWARD = 15;
 const MAX_XP_AWARD = 25;
-const ROLE_REWARDS = [
-  { level: 1, roleIdEnv: 'LEVELING_LEVEL_1_ROLE_ID', label: 'Level 1' },
-  { level: 3, roleIdEnv: 'LEVELING_VERIFIED_ROLE_ID', label: 'Verified' },
-  { level: 5, roleIdEnv: 'LEVELING_REGULAR_ROLE_ID', label: 'Regular' },
-  { level: 10, roleIdEnv: 'LEVELING_STARLIGHT_ROLE_ID', label: 'Starlight' }
-];
-
-function getTargetGuildId() {
-  return getRequiredEnv('LEVELING_GUILD_ID');
-}
-
-function getIgnoredChannelIds() {
-  const raw = getOptionalEnv('LEVELING_IGNORED_CHANNEL_IDS', '');
-  return new Set(
-    raw
-      .split(',')
-      .map((value) => value.trim())
-      .filter(Boolean)
-  );
-}
 
 async function handleMessageForLeveling(message) {
   if (!shouldInspectMessage(message)) {
@@ -62,7 +42,7 @@ async function handleMessageForLeveling(message) {
   await recordMessageHash(guild.id, message.author.id, contentHash, message.id);
 
   if (updatedProfile.level > previousLevel) {
-    await applyRoleRewards(message, updatedProfile.level);
+    await applyRoleRewards(message.member, message.author.id, updatedProfile.level);
   }
 }
 
@@ -112,27 +92,26 @@ function randomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-async function applyRoleRewards(message, level) {
-  const member = message.member;
+async function applyRoleRewards(member, discordUserId, level) {
   if (!member) {
     return;
   }
 
-  for (const reward of ROLE_REWARDS) {
-    const roleId = getOptionalEnv(reward.roleIdEnv);
-    if (!roleId || level < reward.level || member.roles.cache.has(roleId)) {
+  for (const reward of getConfiguredRoleRewards()) {
+    if (level < reward.level || member.roles.cache.has(reward.roleId)) {
       continue;
     }
 
     try {
-      await member.roles.add(roleId, `Reached Mooniemon community level ${reward.level}`);
+      await member.roles.add(reward.roleId, `Reached Mooniemon community level ${reward.level}`);
     } catch (error) {
-      console.error(`Failed to award ${reward.label} role to ${message.author.id}:`, error);
+      console.error(`Failed to award ${reward.label} role to ${discordUserId}:`, error);
     }
   }
 }
 
 module.exports = {
   handleMessageForLeveling,
-  calculateLevel
+  calculateLevel,
+  applyRoleRewards
 };
