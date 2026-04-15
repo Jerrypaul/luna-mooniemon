@@ -63,6 +63,19 @@ async function getProfilesByGuildId(guildId) {
   return result.rows.map(mapProfile);
 }
 
+async function getTopProfilesByGuildId(guildId, limit = 10) {
+  const result = await query(
+    `SELECT *
+     FROM guild_leveling_profiles
+     WHERE guild_id = $1
+     ORDER BY level DESC, xp DESC, id ASC
+     LIMIT $2`,
+    [guildId, limit]
+  );
+
+  return result.rows.map(mapProfile);
+}
+
 async function getLevelingGuildsWithProfiles() {
   const result = await query(
     `SELECT DISTINCT guild_id
@@ -91,5 +104,6 @@ module.exports = {
   recordMessageHash,
   awardXp,
   getProfilesByGuildId,
+  getTopProfilesByGuildId,
   getLevelingGuildsWithProfiles
 };

@@ -5,6 +5,7 @@ const { getGuildSettings } = require('../repositories/guild-settings-repository'
 const { getCardsByGuildId, findCardsByGuildAndName } = require('../repositories/card-repository');
 const { getOrCreateGuildUser, updateLastPullAt } = require('../repositories/guild-user-repository');
 const { createUserCardInstance, countUserCopiesForCard, getCollectionSummary } = require('../repositories/user-card-instance-repository');
+const { getTopProfilesByGuildId } = require('../repositories/leveling-repository');
 
 async function requireGuildContext(interaction) {
   if (!interaction.guildId) {
@@ -95,6 +96,24 @@ async function getViewDataForInteraction(interaction, cardName) {
   };
 }
 
+async function getLeaderboardDataForInteraction(interaction, limit = 10) {
+  const guild = await requireGuildContext(interaction);
+  if (!guild) {
+    return null;
+  }
+
+  const profiles = await getTopProfilesByGuildId(guild.id, limit);
+  if (!profiles.length) {
+    return { status: 'empty' };
+  }
+
+  return {
+    status: 'ok',
+    profiles,
+    guild
+  };
+}
+
 function chooseViewCard(cards) {
   return [...cards].sort((left, right) => {
     if (left.is_holo !== right.is_holo) {
@@ -127,5 +146,6 @@ function getCooldownResult(lastPullAt, cooldownMs, now) {
 
 module.exports = {
   pullCardForInteraction,
-  getViewDataForInteraction
+  getViewDataForInteraction,
+  getLeaderboardDataForInteraction
 };
