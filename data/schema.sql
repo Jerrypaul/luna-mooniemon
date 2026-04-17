@@ -36,11 +36,19 @@ CREATE TABLE IF NOT EXISTS cards (
   current_hp INTEGER NOT NULL DEFAULT 100,
   is_holo BOOLEAN NOT NULL DEFAULT FALSE,
   variant_key TEXT,
+  is_pullable BOOLEAN NOT NULL DEFAULT TRUE,
+  retired_at TIMESTAMPTZ,
   metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE (guild_id, external_card_id)
 );
+
+ALTER TABLE cards
+  ADD COLUMN IF NOT EXISTS is_pullable BOOLEAN NOT NULL DEFAULT TRUE;
+
+ALTER TABLE cards
+  ADD COLUMN IF NOT EXISTS retired_at TIMESTAMPTZ;
 
 CREATE TABLE IF NOT EXISTS guild_users (
   id BIGSERIAL PRIMARY KEY,
@@ -86,6 +94,7 @@ CREATE TABLE IF NOT EXISTS leveling_message_hashes (
 
 CREATE INDEX IF NOT EXISTS idx_cards_guild_id ON cards (guild_id);
 CREATE INDEX IF NOT EXISTS idx_cards_guild_rarity ON cards (guild_id, rarity);
+CREATE INDEX IF NOT EXISTS idx_cards_guild_pullable ON cards (guild_id, is_pullable);
 CREATE INDEX IF NOT EXISTS idx_guild_users_scope ON guild_users (guild_id, discord_user_id);
 CREATE INDEX IF NOT EXISTS idx_user_card_instances_user ON user_card_instances (guild_user_id);
 CREATE INDEX IF NOT EXISTS idx_leveling_profiles_scope ON guild_leveling_profiles (guild_id, discord_user_id);

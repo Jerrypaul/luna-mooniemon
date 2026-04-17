@@ -7,6 +7,7 @@ Mooniemon is a `discord.js` v14 bot for running a guild-scoped trading card coll
 - Slash commands: `/pull` and `/view`
 - Per-server game isolation using `interaction.guildId`
 - Weighted rarity pulls with duplicate cards allowed
+- Card retirement support so older cards stay owned but leave the active pull pool
 - Lightweight leveling worker that can run across multiple Discord servers
 - XP persistence, level thresholds, automatic role rewards, and role backfill support
 - Postgres-backed storage for cards, guild settings, users, and card instances
@@ -153,6 +154,7 @@ Design notes:
 - Cards are stored per guild/server
 - Pull cooldowns are stored per guild user
 - Each pull creates a `user_card_instances` row, so duplicates are naturally supported
+- Cards can be retired from pulls without removing already-owned copies
 - HP and holo flags live in persistent storage for future battle features
 - Leveling settings, profiles, and duplicate message hashes are stored per guild
 
@@ -164,8 +166,10 @@ The import script:
 
 - reads `cards.json`
 - ensures the target guild exists
-- replaces that guild's card pool in Postgres
+- upserts the listed cards into that guild's active pull pool
+- retires cards omitted from the import so they can no longer be pulled
 - preserves server isolation by importing cards only into the specified guild
+- preserves existing owned copies for already-pulled cards
 
 ## Commands
 
@@ -173,7 +177,7 @@ The import script:
 
 - checks the guild-specific cooldown
 - rolls a rarity using guild settings
-- chooses a random card from that guild's pool
+- chooses a random card from that guild's active pull pool
 - creates a new owned card instance for the user
 
 `/view`

@@ -37,7 +37,7 @@ async function pullCardForInteraction(interaction) {
     };
   }
 
-  const cards = await getCardsByGuildId(guild.id);
+  const cards = await getCardsByGuildId(guild.id, { pullableOnly: true });
   if (!cards.length) {
     return { status: 'no_cards' };
   }
