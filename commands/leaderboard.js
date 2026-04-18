@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { getLeaderboardDataForInteraction } = require('../services/game-service');
 
 const MEDAL_EMOJIS = ['\uD83E\uDD47', '\uD83E\uDD48', '\uD83E\uDD49'];
@@ -9,7 +9,7 @@ module.exports = {
     .setDescription('Show the top leveling members in this server.'),
 
   async execute(interaction) {
-    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+    await interaction.deferReply();
 
     const result = await getLeaderboardDataForInteraction(interaction, 10);
     if (!result) {
@@ -44,7 +44,6 @@ module.exports = {
       .setFooter({ text: 'Top 10 by level, then XP' })
       .setTimestamp();
 
-    await interaction.followUp({ embeds: [embed] });
-    await interaction.deleteReply().catch(() => {});
+    await interaction.editReply({ content: '', embeds: [embed], components: [], files: [] });
   }
 };
