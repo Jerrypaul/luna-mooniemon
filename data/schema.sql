@@ -61,6 +61,25 @@ CREATE TABLE IF NOT EXISTS guild_users (
   UNIQUE (guild_id, discord_user_id)
 );
 
+CREATE TABLE IF NOT EXISTS pull_reminders (
+  id BIGSERIAL PRIMARY KEY,
+  guild_user_id BIGINT NOT NULL REFERENCES guild_users(id) ON DELETE CASCADE UNIQUE,
+  notify_at TIMESTAMPTZ NOT NULL,
+  notified_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS minecraft_links (
+  discord_user_id TEXT PRIMARY KEY,
+  minecraft_username TEXT NOT NULL,
+  is_whitelisted BOOLEAN NOT NULL DEFAULT FALSE,
+  grace_until BIGINT,
+  last_known_sub_role BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 CREATE TABLE IF NOT EXISTS user_card_instances (
   id BIGSERIAL PRIMARY KEY,
   guild_user_id BIGINT NOT NULL REFERENCES guild_users(id) ON DELETE CASCADE,
@@ -96,6 +115,8 @@ CREATE INDEX IF NOT EXISTS idx_cards_guild_id ON cards (guild_id);
 CREATE INDEX IF NOT EXISTS idx_cards_guild_rarity ON cards (guild_id, rarity);
 CREATE INDEX IF NOT EXISTS idx_cards_guild_pullable ON cards (guild_id, is_pullable);
 CREATE INDEX IF NOT EXISTS idx_guild_users_scope ON guild_users (guild_id, discord_user_id);
+CREATE INDEX IF NOT EXISTS idx_pull_reminders_due ON pull_reminders (notify_at, notified_at);
+CREATE INDEX IF NOT EXISTS idx_minecraft_links_grace_due ON minecraft_links (grace_until) WHERE grace_until IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_user_card_instances_user ON user_card_instances (guild_user_id);
 CREATE INDEX IF NOT EXISTS idx_leveling_profiles_scope ON guild_leveling_profiles (guild_id, discord_user_id);
 CREATE INDEX IF NOT EXISTS idx_leveling_hashes_lookup ON leveling_message_hashes (guild_id, discord_user_id, content_hash);

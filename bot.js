@@ -4,6 +4,14 @@ const { Client, Collection, Events, GatewayIntentBits, MessageFlags } = require(
 const { getRequiredEnv } = require('./lib/env');
 const { closePool } = require('./data/db');
 const { handleMessageForLeveling } = require('./services/leveling-service');
+const {
+  PULL_NOTIFY_BUTTON_ID,
+  handlePullNotifyButton,
+  startPullReminderWorker
+} = require('./services/pull-reminder-service');
+const { registerMinecraftRoleSync } = require('./features/minecraft/roleSync');
+const { startMinecraftScheduler, stopMinecraftScheduler } = require('./features/minecraft/scheduler');
+const { closeRconConnection } = require('./features/minecraft/whitelistService');
 
 const token = getRequiredEnv('DISCORD_TOKEN');
 const client = new Client({
@@ -30,8 +38,12 @@ for (const file of commandFiles) {
   }
 }
 
+registerMinecraftRoleSync(client);
+
 client.once(Events.ClientReady, (readyClient) => {
   console.log(`Logged in as ${readyClient.user.tag}`);
+  startPullReminderWorker(readyClient);
+  startMinecraftScheduler(readyClient);
 });
 
 client.on(Events.MessageCreate, async (message) => {
@@ -43,6 +55,22 @@ client.on(Events.MessageCreate, async (message) => {
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
+  if (interaction.isButton() && interaction.customId === PULL_NOTIFY_BUTTON_ID) {
+    try {
+      await handlePullNotifyButton(interaction);
+    } catch (error) {
+      console.error(error);
+
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp({ content: 'There was an error while setting your reminder.', flags: MessageFlags.Ephemeral });
+      } else {
+        await interaction.reply({ content: 'There was an error while setting your reminder.', flags: MessageFlags.Ephemeral });
+      }
+    }
+
+    return;
+  }
+
   if (!interaction.isChatInputCommand()) return;
 
   const command = client.commands.get(interaction.commandName);
@@ -63,6 +91,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
 for (const signal of ['SIGINT', 'SIGTERM']) {
   process.on(signal, async () => {
+    stopMinecraftScheduler();
+    await closeRconConnection();
     await closePool();
     process.exit(0);
   });
