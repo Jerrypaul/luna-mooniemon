@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const { buildCardEmbedPayload } = require('../lib/card-presenter');
 const { pullCardForInteraction } = require('../services/game-service');
+const { buildPullCooldownRow } = require('../services/pull-reminder-service');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -14,8 +15,10 @@ module.exports = {
     }
 
     if (result.status === 'cooldown') {
+      const readyAtUnix = Math.floor(result.readyAt.getTime() / 1000);
       await interaction.reply({
-        content: `You are on cooldown in this server. Try again in ${result.remainingText}.`,
+        content: `You are on cooldown in this server. You can pull again <t:${readyAtUnix}:R> at <t:${readyAtUnix}:f>.\n\nThat is about ${result.remainingText} from now.`,
+        components: [buildPullCooldownRow()],
         flags: MessageFlags.Ephemeral
       });
       return;

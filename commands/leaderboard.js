@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
 const { getLeaderboardDataForInteraction } = require('../services/game-service');
 
-const MEDAL_EMOJIS = ['??', '??', '??'];
+const MEDAL_EMOJIS = ['\uD83E\uDD47', '\uD83E\uDD48', '\uD83E\uDD49'];
 
 module.exports = {
   data: new SlashCommandBuilder()

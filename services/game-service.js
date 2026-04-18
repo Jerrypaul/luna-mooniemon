@@ -4,6 +4,7 @@ const { ensureGuild } = require('../repositories/guild-repository');
 const { getGuildSettings } = require('../repositories/guild-settings-repository');
 const { getCardsByGuildId, findCardsByGuildAndName } = require('../repositories/card-repository');
 const { getOrCreateGuildUser, updateLastPullAt } = require('../repositories/guild-user-repository');
+const { deletePullReminderByGuildUserId } = require('../repositories/pull-reminder-repository');
 const { createUserCardInstance, countUserCopiesForCard, getCollectionSummary } = require('../repositories/user-card-instance-repository');
 const { getTopProfilesByGuildId } = require('../repositories/leveling-repository');
 
@@ -33,11 +34,12 @@ async function pullCardForInteraction(interaction) {
   if (!cooldownResult.ready) {
     return {
       status: 'cooldown',
-      remainingText: cooldownResult.remainingText
+      remainingText: cooldownResult.remainingText,
+      readyAt: cooldownResult.readyAt
     };
   }
 
-  const cards = await getCardsByGuildId(guild.id);
+  const cards = await getCardsByGuildId(guild.id, { pullableOnly: true });
   if (!cards.length) {
     return { status: 'no_cards' };
   }
@@ -52,6 +54,7 @@ async function pullCardForInteraction(interaction) {
 
   await createUserCardInstance(guildUser.id, card);
   await updateLastPullAt(guildUser.id, now.toISOString());
+  await deletePullReminderByGuildUserId(guildUser.id);
   const ownedCopies = await countUserCopiesForCard(guildUser.id, card.dbId);
 
   return {
@@ -135,12 +138,14 @@ function getCooldownResult(lastPullAt, cooldownMs, now) {
   }
 
   const remainingMs = cooldownMs - elapsedMs;
+  const readyAt = new Date(now.getTime() + remainingMs);
   const remainingHours = Math.floor(remainingMs / (60 * 60 * 1000));
   const remainingMinutes = Math.ceil((remainingMs % (60 * 60 * 1000)) / (60 * 1000));
 
   return {
     ready: false,
-    remainingText: `${remainingHours}h ${remainingMinutes}m`
+    remainingText: `${remainingHours}h ${remainingMinutes}m`,
+    readyAt
   };
 }
 

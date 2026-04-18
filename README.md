@@ -7,8 +7,10 @@ Mooniemon is a `discord.js` v14 bot for running a guild-scoped trading card coll
 - Slash commands: `/pull` and `/view`
 - Per-server game isolation using `interaction.guildId`
 - Weighted rarity pulls with duplicate cards allowed
+- Card retirement support so older cards stay owned but leave the active pull pool
 - Lightweight leveling worker that can run across multiple Discord servers
 - XP persistence, level thresholds, automatic role rewards, and role backfill support
+- Minecraft whitelist linking and subscriber role sync via RCON
 - Postgres-backed storage for cards, guild settings, users, and card instances
 - JSON import flow for seeding cards into a server
 - Schema prepared for future battle support with persistent HP and holo variants
@@ -34,6 +36,14 @@ Optional:
 - `DISCORD_GUILD_ID`
 - `DATABASE_SSL`
 - `DATABASE_SCHEMA`
+- `GRACE_PERIOD_HOURS` default `48`
+
+Minecraft whitelist:
+
+- `TWITCH_SUB_ROLE_ID`
+- `RCON_HOST`
+- `RCON_PORT`
+- `RCON_PASSWORD`
 
 Recommended shared-database setup:
 
@@ -109,6 +119,11 @@ Set these environment variables in Render:
 - `DATABASE_URL`
 - `DATABASE_SSL`
 - `DATABASE_SCHEMA=mooniemon`
+- `TWITCH_SUB_ROLE_ID`
+- `GRACE_PERIOD_HOURS=48`
+- `RCON_HOST`
+- `RCON_PORT`
+- `RCON_PASSWORD`
 
 Suggested deploy flow:
 
@@ -153,6 +168,7 @@ Design notes:
 - Cards are stored per guild/server
 - Pull cooldowns are stored per guild user
 - Each pull creates a `user_card_instances` row, so duplicates are naturally supported
+- Cards can be retired from pulls without removing already-owned copies
 - HP and holo flags live in persistent storage for future battle features
 - Leveling settings, profiles, and duplicate message hashes are stored per guild
 
@@ -164,8 +180,10 @@ The import script:
 
 - reads `cards.json`
 - ensures the target guild exists
-- replaces that guild's card pool in Postgres
+- upserts the listed cards into that guild's active pull pool
+- retires cards omitted from the import so they can no longer be pulled
 - preserves server isolation by importing cards only into the specified guild
+- preserves existing owned copies for already-pulled cards
 
 ## Commands
 
@@ -173,13 +191,66 @@ The import script:
 
 - checks the guild-specific cooldown
 - rolls a rarity using guild settings
-- chooses a random card from that guild's pool
+- chooses a random card from that guild's active pull pool
 - creates a new owned card instance for the user
 
 `/view`
 
 - shows the user's collection for the current server only
 - supports `card:<name>` to inspect a specific card from that server's pool
+
+`/mc link <minecraft_username>`
+
+- stores the Discord-to-Minecraft account link in Postgres
+- validates the username format before saving
+- whitelists immediately if the member already has the configured Twitch subscriber role
+
+`/mc unlink`
+
+- removes the Discord-to-Minecraft link
+- removes the player from the Minecraft whitelist if they are currently whitelisted
+
+`/mc status`
+
+- shows the linked Minecraft username
+- shows the current whitelist state and any active grace period
+
+`/mc admin-whitelist <user> <minecraft_username>`
+
+- requires `Manage Server`
+- enables a manual whitelist override that does not depend on the Twitch subscriber role
+
+`/mc admin-unwhitelist <user>`
+
+- requires `Manage Server`
+- removes the manual override and immediately re-evaluates whether the player should stay whitelisted
+
+`/mc admin-status <user>`
+
+- requires `Manage Server`
+- shows another member's Minecraft whitelist status, including whether a manual override is active
+
+## Minecraft Whitelist Sync
+
+The Minecraft whitelist feature runs inside the same bot process and is isolated under [features/minecraft](/C:/Chat-GPT-Codex/Mooniemon/features/minecraft).
+
+Persistence:
+
+- link and whitelist state is stored in the `minecraft_links` Postgres table
+- it survives Render restarts, deploys, and instance replacement
+
+Runtime behavior:
+
+- `guildMemberUpdate` listens for subscriber role changes
+- gaining the configured role whitelists a linked player immediately
+- losing the role starts a grace period instead of removing them right away
+- a background interval checks every 5 minutes for expired grace periods
+- expired users are re-checked against live Discord role state before whitelist removal
+
+RCON commands used:
+
+- `whitelist add <username>`
+- `whitelist remove <username>`
 
 ## Leveling System
 
