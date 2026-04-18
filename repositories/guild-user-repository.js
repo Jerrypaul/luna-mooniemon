@@ -25,6 +25,18 @@ async function updateLastPullAt(guildUserId, timestamp) {
   return result.rows[0] ? mapGuildUser(result.rows[0]) : null;
 }
 
+async function resetLastPullAtByGuildId(guildId) {
+  const result = await query(
+    `UPDATE guild_users
+        SET last_pull_at = NULL, updated_at = NOW()
+      WHERE guild_id = $1
+        AND last_pull_at IS NOT NULL`,
+    [guildId]
+  );
+
+  return result.rowCount || 0;
+}
+
 function mapGuildUser(row) {
   return {
     id: row.id,
@@ -37,5 +49,6 @@ function mapGuildUser(row) {
 
 module.exports = {
   getOrCreateGuildUser,
-  updateLastPullAt
+  updateLastPullAt,
+  resetLastPullAtByGuildId
 };

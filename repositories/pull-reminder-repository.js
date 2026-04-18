@@ -21,6 +21,18 @@ async function deletePullReminderByGuildUserId(guildUserId) {
   );
 }
 
+async function deletePullRemindersByGuildId(guildId) {
+  const result = await query(
+    `DELETE FROM pull_reminders pr
+      USING guild_users gu
+      WHERE pr.guild_user_id = gu.id
+        AND gu.guild_id = $1`,
+    [guildId]
+  );
+
+  return result.rowCount || 0;
+}
+
 async function getDuePullReminders(limit = 25) {
   const result = await query(
     `SELECT pr.id,
@@ -69,6 +81,7 @@ function mapPullReminder(row) {
 module.exports = {
   upsertPullReminder,
   deletePullReminderByGuildUserId,
+  deletePullRemindersByGuildId,
   getDuePullReminders,
   markPullReminderNotified
 };
