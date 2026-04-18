@@ -9,15 +9,25 @@ module.exports = {
     .setDescription('Show the top leveling members in this server.'),
 
   async execute(interaction) {
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+
     const result = await getLeaderboardDataForInteraction(interaction, 10);
     if (!result) {
+      await interaction.editReply({
+        content: 'This command can only be used inside a server.',
+        embeds: [],
+        components: [],
+        files: []
+      });
       return;
     }
 
     if (result.status === 'empty') {
-      await interaction.reply({
+      await interaction.editReply({
         content: 'No leveling data exists for this server yet.',
-        flags: MessageFlags.Ephemeral
+        embeds: [],
+        components: [],
+        files: []
       });
       return;
     }
@@ -34,6 +44,7 @@ module.exports = {
       .setFooter({ text: 'Top 10 by level, then XP' })
       .setTimestamp();
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.followUp({ embeds: [embed] });
+    await interaction.deleteReply().catch(() => {});
   }
 };
