@@ -9,14 +9,22 @@ module.exports = {
     .setDescription('Pull one card (4-hour cooldown).'),
 
   async execute(interaction) {
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+
     const result = await pullCardForInteraction(interaction);
     if (!result) {
+      await interaction.editReply({
+        content: 'This command can only be used inside a server.',
+        embeds: [],
+        components: [],
+        files: []
+      });
       return;
     }
 
     if (result.status === 'cooldown') {
       const readyAtUnix = Math.floor(result.readyAt.getTime() / 1000);
-      await interaction.reply({
+      await interaction.editReply({
         content: `You are on cooldown in this server. You can pull again <t:${readyAtUnix}:R> at <t:${readyAtUnix}:f>.\n\nThat is about ${result.remainingText} from now.`,
         components: [buildPullCooldownRow()],
         flags: MessageFlags.Ephemeral
@@ -25,17 +33,21 @@ module.exports = {
     }
 
     if (result.status === 'no_cards') {
-      await interaction.reply({
+      await interaction.editReply({
         content: 'No cards are available for this server yet. Import cards into Postgres first.',
-        flags: MessageFlags.Ephemeral
+        embeds: [],
+        components: [],
+        files: []
       });
       return;
     }
 
     if (result.status !== 'ok') {
-      await interaction.reply({
+      await interaction.editReply({
         content: 'Could not select a card. Please try again later.',
-        flags: MessageFlags.Ephemeral
+        embeds: [],
+        components: [],
+        files: []
       });
       return;
     }
@@ -45,6 +57,7 @@ module.exports = {
       pulledBy: interaction.user.username
     });
 
-    await interaction.reply({ embeds: [embed], files });
+    await interaction.followUp({ embeds: [embed], files });
+    await interaction.deleteReply().catch(() => {});
   }
 };

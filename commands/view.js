@@ -23,31 +23,43 @@ module.exports = {
     ),
 
   async execute(interaction) {
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+
     const cardName = interaction.options.getString('card');
     const result = await getViewDataForInteraction(interaction, cardName);
     if (!result) {
+      await interaction.editReply({
+        content: 'This command can only be used inside a server.',
+        embeds: [],
+        components: [],
+        files: []
+      });
       return;
     }
 
     if (result.status === 'card_not_found') {
-      await interaction.reply({
+      await interaction.editReply({
         content: `No card found with name "${cardName}" in this server's card pool.`,
-        flags: MessageFlags.Ephemeral
+        embeds: [],
+        components: [],
+        files: []
       });
       return;
     }
 
     if (result.status === 'empty') {
-      await interaction.reply({
+      await interaction.editReply({
         content: 'Your collection is empty in this server. Use /pull to get your first card!',
-        flags: MessageFlags.Ephemeral
+        embeds: [],
+        components: [],
+        files: []
       });
       return;
     }
 
     if (result.status === 'single_card') {
       const { embed, files } = buildCardEmbedPayload(result.card, result.ownedCopies);
-      await interaction.reply({ embeds: [embed], files, flags: MessageFlags.Ephemeral });
+      await interaction.editReply({ content: '', embeds: [embed], files, components: [] });
       return;
     }
 
@@ -55,9 +67,9 @@ module.exports = {
     let pageIndex = 0;
     const initialPayload = buildCollectionPagePayload(interaction, collection, pageIndex);
 
-    await interaction.reply({
+    await interaction.editReply({
       ...initialPayload,
-      flags: MessageFlags.Ephemeral
+      content: ''
     });
 
     if (collection.length <= 1) {

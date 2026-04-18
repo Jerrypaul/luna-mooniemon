@@ -78,6 +78,8 @@ async function execute(interaction) {
     return;
   }
 
+  await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+
   const subcommand = interaction.options.getSubcommand();
 
   if (subcommand === 'link') {
@@ -114,9 +116,11 @@ async function handleLink(interaction) {
   const minecraftUsername = interaction.options.getString('minecraft_username', true).trim();
 
   if (!MINECRAFT_USERNAME_PATTERN.test(minecraftUsername)) {
-    await interaction.reply({
+    await interaction.editReply({
       content: 'Minecraft usernames must be 3-16 characters and contain only letters, numbers, or underscores.',
-      flags: MessageFlags.Ephemeral
+      embeds: [],
+      components: [],
+      files: []
     });
     return;
   }
@@ -162,9 +166,11 @@ async function handleLink(interaction) {
     lines.push('Your link is saved, but you will only be whitelisted while you have the Twitch subscriber role.');
   }
 
-  await interaction.reply({
+  await interaction.editReply({
     content: lines.join('\n'),
-    flags: MessageFlags.Ephemeral
+    embeds: [],
+    components: [],
+    files: []
   });
 }
 
@@ -172,9 +178,11 @@ async function handleUnlink(interaction) {
   const existingLink = await getLink(interaction.user.id);
 
   if (!existingLink) {
-    await interaction.reply({
+    await interaction.editReply({
       content: 'You do not have a linked Minecraft username yet.',
-      flags: MessageFlags.Ephemeral
+      embeds: [],
+      components: [],
+      files: []
     });
     return;
   }
@@ -186,9 +194,11 @@ async function handleUnlink(interaction) {
 
   await removeLink(interaction.user.id);
 
-  await interaction.reply({
+  await interaction.editReply({
     content: `Unlinked \`${existingLink.minecraftUsername}\`${existingLink.isWhitelisted ? ' and removed it from the whitelist.' : '.'}`,
-    flags: MessageFlags.Ephemeral
+    embeds: [],
+    components: [],
+    files: []
   });
 }
 
@@ -196,9 +206,11 @@ async function handleStatus(interaction) {
   const link = await getLink(interaction.user.id);
 
   if (!link) {
-    await interaction.reply({
+    await interaction.editReply({
       content: 'You do not have a linked Minecraft username yet. Use `/mc link <minecraft_username>` first.',
-      flags: MessageFlags.Ephemeral
+      embeds: [],
+      components: [],
+      files: []
     });
     return;
   }
@@ -220,9 +232,11 @@ async function handleAdminWhitelist(interaction) {
   const minecraftUsername = interaction.options.getString('minecraft_username', true).trim();
 
   if (!MINECRAFT_USERNAME_PATTERN.test(minecraftUsername)) {
-    await interaction.reply({
+    await interaction.editReply({
       content: 'Minecraft usernames must be 3-16 characters and contain only letters, numbers, or underscores.',
-      flags: MessageFlags.Ephemeral
+      embeds: [],
+      components: [],
+      files: []
     });
     return;
   }
@@ -269,9 +283,11 @@ async function handleAdminWhitelist(interaction) {
 
   lines.push('This player will stay whitelisted even without the Twitch subscriber role until you remove the override.');
 
-  await interaction.reply({
+  await interaction.editReply({
     content: lines.join('\n'),
-    flags: MessageFlags.Ephemeral
+    embeds: [],
+    components: [],
+    files: []
   });
 }
 
@@ -287,20 +303,24 @@ async function handleAdminUnwhitelist(interaction) {
   const existingLink = await getLink(targetUser.id);
 
   if (!existingLink) {
-    await interaction.reply({
+    await interaction.editReply({
       content: 'That user does not have a linked Minecraft username yet.',
-      flags: MessageFlags.Ephemeral
+      embeds: [],
+      components: [],
+      files: []
     });
     return;
   }
 
   if (!existingLink.manualOverride) {
-    await interaction.reply({
+    await interaction.editReply({
       content: [
         `No manual whitelist override is active for <@${targetUser.id}>.`,
         `Current whitelist state: ${existingLink.isWhitelisted ? 'Yes' : 'No'}`
       ].join('\n'),
-      flags: MessageFlags.Ephemeral
+      embeds: [],
+      components: [],
+      files: []
     });
     return;
   }
@@ -313,13 +333,15 @@ async function handleAdminUnwhitelist(interaction) {
 
   const stillWhitelisted = updatedLink?.isWhitelisted ? 'Yes' : 'No';
 
-  await interaction.reply({
+  await interaction.editReply({
     content: [
       `Removed the manual whitelist override for <@${targetUser.id}>.`,
       `Current subscriber role: ${hasSubscriberRole ? 'Yes' : 'No'}`,
       `Currently whitelisted after re-evaluating role sync: ${stillWhitelisted}`
     ].join('\n'),
-    flags: MessageFlags.Ephemeral
+    embeds: [],
+    components: [],
+    files: []
   });
 }
 
@@ -334,9 +356,11 @@ async function handleAdminStatus(interaction) {
   const link = await getLink(targetUser.id);
 
   if (!link) {
-    await interaction.reply({
+    await interaction.editReply({
       content: 'That user does not have a linked Minecraft username yet.',
-      flags: MessageFlags.Ephemeral
+      embeds: [],
+      components: [],
+      files: []
     });
     return;
   }
@@ -354,7 +378,7 @@ async function replyWithStatus(interaction, { user, member, link }) {
     ? `Grace period ends <t:${Math.floor(link.graceUntil / 1000)}:R> at <t:${Math.floor(link.graceUntil / 1000)}:f>.`
     : 'No grace period is currently active.';
 
-  await interaction.reply({
+  await interaction.editReply({
     content: [
       `Discord user: <@${user.id}>`,
       `Linked Minecraft username: \`${link.minecraftUsername}\``,
@@ -363,7 +387,9 @@ async function replyWithStatus(interaction, { user, member, link }) {
       `Manual override: ${link.manualOverride ? 'Yes' : 'No'}`,
       graceText
     ].join('\n'),
-    flags: MessageFlags.Ephemeral
+    embeds: [],
+    components: [],
+    files: []
   });
 }
 
@@ -372,9 +398,11 @@ function hasMinecraftAdminPermission(member) {
 }
 
 async function denyAdminSubcommand(interaction) {
-  await interaction.reply({
+  await interaction.editReply({
     content: 'You need the Manage Server permission to use this Minecraft admin command.',
-    flags: MessageFlags.Ephemeral
+    embeds: [],
+    components: [],
+    files: []
   });
 }
 

@@ -60,12 +60,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
       await handlePullNotifyButton(interaction);
     } catch (error) {
       console.error(error);
-
-      if (interaction.replied || interaction.deferred) {
-        await interaction.followUp({ content: 'There was an error while setting your reminder.', flags: MessageFlags.Ephemeral });
-      } else {
-        await interaction.reply({ content: 'There was an error while setting your reminder.', flags: MessageFlags.Ephemeral });
-      }
+      await sendInteractionError(interaction, 'There was an error while setting your reminder.');
     }
 
     return;
@@ -80,14 +75,32 @@ client.on(Events.InteractionCreate, async (interaction) => {
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
-
-    if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({ content: 'There was an error while executing this command.', flags: MessageFlags.Ephemeral });
-    } else {
-      await interaction.reply({ content: 'There was an error while executing this command.', flags: MessageFlags.Ephemeral });
-    }
+    await sendInteractionError(interaction, 'There was an error while executing this command.');
   }
 });
+
+async function sendInteractionError(interaction, content) {
+  try {
+    if (interaction.replied) {
+      await interaction.followUp({ content, flags: MessageFlags.Ephemeral });
+      return;
+    }
+
+    if (interaction.deferred) {
+      await interaction.editReply({ content, embeds: [], components: [], files: [] });
+      return;
+    }
+
+    await interaction.reply({ content, flags: MessageFlags.Ephemeral });
+  } catch (responseError) {
+    if (responseError?.code === 10062) {
+      console.warn(`Interaction expired before an error response could be sent for ${interaction.id}.`);
+      return;
+    }
+
+    console.error('Failed to send interaction error response:', responseError);
+  }
+}
 
 for (const signal of ['SIGINT', 'SIGTERM']) {
   process.on(signal, async () => {
