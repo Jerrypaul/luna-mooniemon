@@ -86,6 +86,23 @@ async function applySubscriberState(client, discordUserId, hasSubscriberRole, op
     return getLink(discordUserId);
   }
 
+  if (link.manualOverride) {
+    if (link.graceUntil !== null) {
+      await clearGraceUntil(discordUserId);
+      console.log(`[minecraft] Cleared grace period for manually overridden user ${link.minecraftUsername}.`);
+    }
+
+    if (!link.isWhitelisted) {
+      await whitelistAdd(link.minecraftUsername);
+      await setWhitelistState(discordUserId, true);
+      console.log(`[minecraft] Restored whitelist for manual override on ${link.minecraftUsername}.`);
+    } else {
+      console.log(`[minecraft] Preserving manual whitelist override for ${link.minecraftUsername}.`);
+    }
+
+    return getLink(discordUserId);
+  }
+
   if (!link.isWhitelisted) {
     if (link.graceUntil !== null) {
       await clearGraceUntil(discordUserId);

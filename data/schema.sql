@@ -74,11 +74,15 @@ CREATE TABLE IF NOT EXISTS minecraft_links (
   discord_user_id TEXT PRIMARY KEY,
   minecraft_username TEXT NOT NULL,
   is_whitelisted BOOLEAN NOT NULL DEFAULT FALSE,
+  manual_override BOOLEAN NOT NULL DEFAULT FALSE,
   grace_until BIGINT,
   last_known_sub_role BOOLEAN NOT NULL DEFAULT FALSE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+ALTER TABLE minecraft_links
+  ADD COLUMN IF NOT EXISTS manual_override BOOLEAN NOT NULL DEFAULT FALSE;
 
 CREATE TABLE IF NOT EXISTS user_card_instances (
   id BIGSERIAL PRIMARY KEY,

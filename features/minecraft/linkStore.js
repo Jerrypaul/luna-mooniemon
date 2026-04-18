@@ -29,6 +29,10 @@ async function setWhitelistState(discordUserId, isWhitelisted) {
   return updateMinecraftLinkState(discordUserId, { isWhitelisted });
 }
 
+async function setManualOverride(discordUserId, manualOverride) {
+  return updateMinecraftLinkState(discordUserId, { manualOverride });
+}
+
 async function setGraceUntil(discordUserId, graceUntil) {
   return updateMinecraftLinkState(discordUserId, { graceUntil });
 }
@@ -51,6 +55,7 @@ module.exports = {
   upsertLink,
   removeLink,
   setWhitelistState,
+  setManualOverride,
   setGraceUntil,
   clearGraceUntil,
   setLastKnownSubRole,

@@ -215,6 +215,21 @@ The import script:
 - shows the linked Minecraft username
 - shows the current whitelist state and any active grace period
 
+`/mc admin-whitelist <user> <minecraft_username>`
+
+- requires `Manage Server`
+- enables a manual whitelist override that does not depend on the Twitch subscriber role
+
+`/mc admin-unwhitelist <user>`
+
+- requires `Manage Server`
+- removes the manual override and immediately re-evaluates whether the player should stay whitelisted
+
+`/mc admin-status <user>`
+
+- requires `Manage Server`
+- shows another member's Minecraft whitelist status, including whether a manual override is active
+
 ## Minecraft Whitelist Sync
 
 The Minecraft whitelist feature runs inside the same bot process and is isolated under [features/minecraft](/C:/Chat-GPT-Codex/Mooniemon/features/minecraft).
