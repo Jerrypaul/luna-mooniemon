@@ -9,7 +9,7 @@ const {
   handlePullNotifyButton,
   startPullReminderWorker
 } = require('./services/pull-reminder-service');
-const { registerMinecraftRoleSync } = require('./features/minecraft/roleSync');
+const { registerMinecraftRoleSync, reconcileLinkedSubscribers } = require('./features/minecraft/roleSync');
 const { startMinecraftScheduler, stopMinecraftScheduler } = require('./features/minecraft/scheduler');
 const { closeRconConnection } = require('./features/minecraft/whitelistService');
 
@@ -40,8 +40,9 @@ for (const file of commandFiles) {
 
 registerMinecraftRoleSync(client);
 
-client.once(Events.ClientReady, (readyClient) => {
+client.once(Events.ClientReady, async (readyClient) => {
   console.log(`Logged in as ${readyClient.user.tag}`);
+  await reconcileLinkedSubscribers(readyClient);
   startPullReminderWorker(readyClient);
   startMinecraftScheduler(readyClient);
 });

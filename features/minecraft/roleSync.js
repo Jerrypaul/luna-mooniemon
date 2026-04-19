@@ -2,6 +2,7 @@ const { Events } = require('discord.js');
 const { getIntegerEnv, getRequiredEnv } = require('../../lib/env');
 const {
   getLink,
+  loadLinks,
   setWhitelistState,
   setGraceUntil,
   clearGraceUntil,
@@ -136,6 +137,29 @@ async function applySubscriberState(client, discordUserId, hasSubscriberRole, op
   return getLink(discordUserId);
 }
 
+async function reconcileLinkedSubscribers(client) {
+  const links = await loadLinks();
+
+  if (links.length === 0) {
+    console.log('[minecraft] No linked Minecraft accounts found during startup reconciliation.');
+    return;
+  }
+
+  console.log(`[minecraft] Reconciling ${links.length} linked Minecraft account(s) against live subscriber roles.`);
+
+  for (const link of links) {
+    try {
+      const hasSubscriberRole = await fetchLiveSubscriberRoleState(client, link.discordUserId);
+      await applySubscriberState(client, link.discordUserId, hasSubscriberRole, {
+        source: 'startup-reconcile',
+        allowGracePeriod: true
+      });
+    } catch (error) {
+      console.error(`[minecraft] Failed startup reconciliation for ${link.minecraftUsername}:`, error);
+    }
+  }
+}
+
 function registerMinecraftRoleSync(client) {
   client.on(Events.GuildMemberUpdate, async (oldMember, newMember) => {
     try {
@@ -161,5 +185,6 @@ module.exports = {
   memberHasSubscriberRole,
   fetchLiveSubscriberRoleState,
   applySubscriberState,
+  reconcileLinkedSubscribers,
   registerMinecraftRoleSync
 };
