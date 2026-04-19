@@ -1,282 +1,1036 @@
 [
   {
-    "id": "moon_001",
+    "id": "ms1_001",
     "name": "Luna3d",
-    "rarity": "Epic",
-    "type": "Moonie",
+    "rarity": "Legendary",
+    "type": "Moon",
     "description": "Luna during her 3D debut stream!!",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991059685212242/IMG_6994.png"
+    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991059685212242/IMG_6994.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-001",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 1,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "luna3d"
+      ]
+    }
   },
   {
-    "id": "moon_002",
-    "name": "LunaBunnieVT",
-    "rarity": "Epic",
-    "type": "Moonie",
+    "id": "ms1_002",
+    "name": "LunaBunnie",
+    "rarity": "Uncommon",
+    "type": "Moon",
     "description": "Look at those adorable bunnie ears",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991065103990848/LunaBunnieVT.png"
+    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991065103990848/LunaBunnieVT.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-002",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 2,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "lunabunnie"
+      ]
+    }
   },
   {
-    "id": "moon_003",
-    "name": "LunaGoonieVT",
-    "rarity": "Epic",
-    "type": "Moonie",
+    "id": "ms1_003",
+    "name": "LunaGoonie",
+    "rarity": "Uncommon",
+    "type": "Moon",
     "description": "What you up to moonie?",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991064013471857/LunaGoonieVT.png"
+    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991064013471857/LunaGoonieVT.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-003",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 3,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "lunagoonie"
+      ]
+    }
   },
   {
-    "id": "moon_004",
-    "name": "LunaHeadieVT",
-    "rarity": "Epic",
-    "type": "Moonie",
+    "id": "ms1_004",
+    "name": "LunaHeadie",
+    "rarity": "Uncommon",
+    "type": "Moon",
     "description": "Luna has nobody (see what I did there?)",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991062935797986/LunaHeadieVT.png"
+    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991062935797986/LunaHeadieVT.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-004",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 4,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "lunaheadie"
+      ]
+    }
   },
   {
-    "id": "moon_005",
-    "name": "LunaKittieVT",
-    "rarity": "Epic",
-    "type": "Moonie",
+    "id": "ms1_005",
+    "name": "LunaKittie",
+    "rarity": "Uncommon",
+    "type": "Moon",
     "description": "Gasp! Kittyyyy",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991061861793842/LunaKittieVT.png"
+    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991061861793842/LunaKittieVT.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-005",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 5,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "lunakittie"
+      ]
+    }
   },
   {
-    "id": "moon_006",
-    "name": "LunaMercyVT",
-    "rarity": "Epic",
-    "type": "Moonie",
+    "id": "ms1_006",
+    "name": "LunaMercy",
+    "rarity": "Uncommon",
+    "type": "Moon",
     "description": "100% official mercy cosplay (NOT CLICKBAIT)",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991133685059644/LunaMercyVT.png"
+    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991133685059644/LunaMercyVT.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-006",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 6,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "lunamercy"
+      ]
+    }
   },
   {
-    "id": "moon_007",
-    "name": "LunaMoonieVT",
-    "rarity": "Legendary",
-    "type": "Moonie",
+    "id": "ms1_007",
+    "name": "LunaMoonie",
+    "rarity": "Uncommon",
+    "type": "Moon",
     "description": "Look! It's our (yes OUR) favourite teddy bear streamer!",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991139154432125/LunaMoonieVT_Holo.png"
+    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991137447477289/LunaMoonieVT.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-007",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 7,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "lunamoonie"
+      ]
+    }
   },
   {
-    "id": "moon_008",
-    "name": "LunaMoonieVT",
-    "rarity": "Epic",
-    "type": "Moonie",
-    "description": "Look! It's our (yes OUR) favourite teddy bear streamer!",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991137447477289/LunaMoonieVT.png"
-  },
-  {
-    "id": "moon_009",
+    "id": "ms1_008",
     "name": "LunaOG",
-    "rarity": "Epic",
-    "type": "Moonie",
+    "rarity": "Rare",
+    "type": "Moon",
     "description": "Ahhh such good memories… this is Luna's 1.0 model!",
-    "image_url": "https://cdn.discordapp.com/attachments/1478990670319583252/1478991058800087081/IMG_6997.png"
+    "image_url": "https://cdn.discordapp.com/attachments/1478990670319583252/1478991058800087081/IMG_6997.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-008",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 8,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "lunaog"
+      ]
+    }
   },
   {
-    "id": "moon_010",
-    "name": "LunaSpookieVT",
-    "rarity": "Legendary",
-    "type": "Moonie",
+    "id": "ms1_009",
+    "name": "LunaSpookie",
+    "rarity": "Uncommon",
+    "type": "Moon",
     "description": "Dressing up as a mummy for Halloween in 2025!",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991135878938684/LunaSpookieVT_Holo.png"
+    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991060440191007/LunaSpookieVT.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-009",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 9,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "lunaspookie"
+      ]
+    }
   },
   {
-    "id": "moon_011",
-    "name": "LunaSpookieVT",
-    "rarity": "Epic",
-    "type": "Moonie",
-    "description": "Dressing up as a mummy for Halloween in 2025!",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991060440191007/LunaSpookieVT.png"
-  },
-  {
-    "id": "moon_012",
+    "id": "ms1_010",
     "name": "LunaWife",
     "rarity": "Epic",
-    "type": "Moonie",
+    "type": "Moon",
     "description": "Why run?",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991066186125312/Your_WIFE.png"
+    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991066186125312/Your_WIFE.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-010",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 10,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "lunawife"
+      ]
+    }
   },
   {
-    "id": "moon_013",
-    "name": "LunaYandereVT",
-    "rarity": "Legendary",
-    "type": "Moonie",
-    "description": "Man she's so darn cute!",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991069118202008/LunaYandereVT_Holo.png"
-  },
-  {
-    "id": "moon_014",
-    "name": "LunaYandereVT",
-    "rarity": "Epic",
-    "type": "Moonie",
-    "description": "Man she's so darn cute!",
-    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991067427901450/LunaYandereVT.png"
-  },
-  {
-    "id": "moon_015",
-    "name": "Keeb!",
+    "id": "ms1_011",
+    "name": "LunaYandere",
     "rarity": "Uncommon",
-    "type": "Magical Girl",
-    "description": "Look! A strange F1 obsessed Irish bean!",
-    "image_url": "https://cdn.discordapp.com/attachments/1480351810861666505/1480359909567762503/IMG_7237.png"
+    "type": "Moon",
+    "description": "Man she's so darn cute!",
+    "image_url": "https://media.discordapp.net/attachments/1478990670319583252/1478991067427901450/LunaYandereVT.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-011",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 11,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "lunayandere"
+      ]
+    }
   },
   {
-    "id": "moon_016",
-    "name": "Astra Nyrata",
-    "rarity": "Uncommon",
-    "type": "Magical Girl",
-    "description": "Hey! It's the ever reliable Astra!",
-    "image_url": "https://cdn.discordapp.com/attachments/1480351810861666505/1480359910314217532/IMG_7236.png"
-  },
-  {
-    "id": "moon_017",
-    "name": "Keeb!",
-    "rarity": "Epic",
-    "type": "Magical Girl",
-    "description": "Look! A strange F1 obsessed Irish bean!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480363196844871934/IMG_7241.png"
-  },
-  {
-    "id": "moon_018",
-    "name": "Astra Nyrata",
-    "rarity": "Epic",
-    "type": "Magical Girl",
-    "description": "Hey! It's the ever reliable Astra!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480363198128591020/IMG_7240.png"
-  },
-  {
-    "id": "moon_019",
-    "name": "Keeb!",
-    "rarity": "Rare",
-    "type": "Magical Girl",
-    "description": "Look! A strange F1 obsessed Irish bean!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480365565414740059/Keeb_Holo.png"
-  },
-  {
-    "id": "moon_020",
-    "name": "Astra Nyrata",
-    "rarity": "Rare",
-    "type": "Magical Girl",
-    "description": "Hey! It's the ever reliable Astra!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480365568292028567/AstraNyrata_holo.png"
-  },
-  {
-    "id": "moon_021",
+    "id": "ms1_012",
     "name": "Luna",
     "rarity": "Uncommon",
-    "type": "Moonie",
+    "type": "Moon",
     "description": "Hai!! It's LunaMoonieVT!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480352548236824698/IMG_7227.png"
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480352548236824698/IMG_7227.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-012",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 12,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "luna"
+      ]
+    }
   },
   {
-    "id": "moon_022",
-    "name": "Luna",
-    "rarity": "Rare",
-    "type": "Moonie",
-    "description": "Hai!! It's LunaMoonieVT!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480365566752587806/Luna_holo.png"
-  },
-  {
-    "id": "moon_023",
-    "name": "Husky",
-    "rarity": "Common",
-    "type": "Magical Girl",
-    "description": "The active umamusume enjoyer Husky is here!!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480374068963311656/IMG_7248.png"
-  },
-  {
-    "id": "moon_024",
-    "name": "Husky",
-    "rarity": "Epic",
-    "type": "Magical Girl",
-    "description": "The active umamusume enjoyer Husky is here!!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480374070112424079/IMG_7247.png"
-  },
-  {
-    "id": "moon_025",
+    "id": "ms1_013",
     "name": "Yume Kuma",
     "rarity": "Common",
     "type": "Mascot",
     "description": "A collectable Mooniemon card of the soft, sleepy, and slightly chaotic mascot.",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480627129560600757/IMG_7281.png"
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480627129560600757/IMG_7281.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-013",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 13,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "yume kuma"
+      ]
+    }
   },
   {
-    "id": "moon_026",
+    "id": "ms1_014",
     "name": "PooPoo",
     "rarity": "Common",
     "type": "Mascot",
     "description": "A professional troublemaker and part-time stream assistant. He does what he wants.",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480627453750935754/IMG_7282.png"
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480627453750935754/IMG_7282.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-014",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 14,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "poopoo"
+      ]
+    }
   },
   {
-    "id": "moon_027",
-    "name": "Dragneelious",
+    "id": "ms1_015",
+    "name": "Potato Moonie",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "The ultimate Spud!",
+    "image_url": "https://cdn.discordapp.com/attachments/1480351810861666505/1494426458938933268/IMG_8136.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-015",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 15,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "potato_moonie",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_016",
+    "name": "Mr Bear",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "The original Moonie! He's a bit grumpy but we love him.",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1494424807532658769/IMG_8131.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-016",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 16,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "mr_bear",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_017",
+    "name": "Luna Moonie",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "Something isn't right here! hmmm...",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1494424808643887275/IMG_8130.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-017",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 17,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "luna_moonie",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_018",
+    "name": "Moonie Paw",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "the paw of moonie! she usually hides it to blend in with humans",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1494424804831400176/IMG_8133.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-018",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 18,
+      "credits": {
+        "art_by": "Astra",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "moonie_paw",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_019",
+    "name": "Moonie Ear",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "Collect 2 for the full set!!!",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1492740746439168110/IMG_8065.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-019",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 19,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "moonie_ear",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_020",
+    "name": "Moonie Ditto",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "The elusive Moonie Ditto! Can you find it? (Hint: it's not in the game files)",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1494424814155206826/IMG_8126.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-020",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 20,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "moonie_ditto",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_021",
+    "name": "Luna Moonie",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "The real Luna?",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1494424809801777182/IMG_8129.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-021",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 21,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "luna_moonie",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_022",
+    "name": "Luna Moonie",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "She angy!!!! Very ANGY!!!",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1494424806341480629/IMG_8132.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-022",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 22,
+      "credits": {
+        "art_by": "CatsOnMxth",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "luna_moonie",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_023",
+    "name": "Luna Moonie",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "The Herobrine of the Mooni-verse! Legend has it that if you stare at this card for too long, you'll see Luna's true form... but nobody has lived to tell the tale.",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1494424811160469585/IMG_8128.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-023",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 23,
+      "credits": {
+        "art_by": "Banan's Blocks",
+        "comm_by": "The Bees",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "luna_moonie",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_024",
+    "name": "akaMoonie",
+    "rarity": "Rare",
+    "type": "Fanart",
+    "description": "akaDads favorite Moonie!",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1494424812767019008/IMG_8127.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-024",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 24,
+      "credits": {
+        "art_by": "akaDad",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "aka_moonie",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_025",
+    "name": "The Goblin VT",
+    "rarity": "Epic",
+    "type": "Friend",
+    "description": "its the mischevious goblin!! shes the #1 moonie enjoyer!",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1494424803476771078/IMG_8134.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-025",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 25,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "the_goblin_vt"
+      ]
+    }
+  },
+  {
+    "id": "ms1_026",
+    "name": "The Goblin VT",
+    "rarity": "Rare",
+    "type": "Friend",
+    "description": "its the mischevious goblin!! shes the #1 moonie enjoyer!",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1494424802105102437/IMG_8135.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-026",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 26,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "the_goblin_vt"
+      ]
+    }
+  },
+  {
+    "id": "ms1_027",
+    "name": "Pixel Moonie",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "8-bit pixel art of our favourite teddy bear streamer! Collect all 3 for the full set!",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1494417574623051776/IMG_8122.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-027",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 27,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "pixel_moonie",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_028",
+    "name": "Giga Moonie",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "The Almighty GigaMoonie is here to flex on all.",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1492739975438143538/IMG_8064.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-028",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 28,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "giga_moonie",
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_029",
+    "name": "Luna Moonie",
+    "rarity": "Common",
+    "type": "Moon",
+    "description": "Caught mid-moment… but what was she thinking?",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495122681543266597/IMG_8153.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-029",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 29,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      }
+    }
+  },
+  {
+    "id": "ms1_030",
+    "name": "Chibi Moonie",
+    "rarity": "Common",
+    "type": "Moon",
+    "description": "Smol. Powerful. Possibly plotting something.",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495122682432196908/IMG_8151.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-030",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 30,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      }
+    }
+  },
+  {
+    "id": "ms1_031",
+    "name": "Mixed Freight",
+    "rarity": "Rare",
+    "type": "Friend",
+    "description": "Thomas the Tank Engine's lil step bro",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495125606155812994/IMG_8156.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-031",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 31,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      }
+    }
+  },
+  {
+    "id": "ms1_032",
+    "name": "Devi De Vaux",
+    "rarity": "Rare",
+    "type": "Friend",
+    "description": "Elegance meets chaos in perfect balance.",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495127106890371152/IMG_8159.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-032",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 32,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      }
+    }
+  },
+  {
+    "id": "ms1_033",
+    "name": "Moonie Thigh",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "A legendary sighting. Rare? No. Respected? Absolutely.",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495133101016486139/IMG_8169.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-033",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 33,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_034",
+    "name": "Sailor Moonie",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "Fighting for love, justice, and snack breaks!",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495133097178693632/IMG_8172.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-034",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 34,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "fanart"
+      ]
+    }
+  },
+  {
+    "id": "ms1_035",
+    "name": "Doodle Moonie",
     "rarity": "Uncommon",
-    "type": "Magical Girl",
-    "description": "Usually asleep, it's Dragneelious!!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480617807732543590/IMG_7268.png"
+    "type": "Moon",
+    "description": "Rough lines. Pure energy. Maximum Moonie.",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495133095878463610/IMG_8173.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-035",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 35,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      }
+    }
   },
   {
-    "id": "moon_028",
-    "name": "Dragneelious",
-    "rarity": "Epic",
-    "type": "Magical Girl",
-    "description": "Usually asleep, it's Dragneelious!!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480617813092864212/IMG_7269.png"
-  },
-  {
-    "id": "moon_029",
-    "name": "Xeroc",
+    "id": "ms1_036",
+    "name": "Luna Moonie",
     "rarity": "Common",
-    "type": "Active Member",
-    "description": "Hiya Best Buddy! It's Xeroc!!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480734118697238568/IMG_7301.png"
+    "type": "Fanart",
+    "description": "Something about this one feels… slightly off.",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495133099711926342/IMG_8170.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-036",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 36,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "fanart"
+      ]
+    }
   },
   {
-    "id": "moon_030",
-    "name": "Xeroc",
-    "rarity": "Epic",
-    "type": "Active Member",
-    "description": "Hiya Best Buddy! It's Xeroc!!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480734118147788960/IMG_7302.png"
+    "id": "ms1_037",
+    "name": "Summer Moonie",
+    "rarity": "Common",
+    "type": "Moon",
+    "description": "Sun’s out, vibes up, Moonie activated.",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495139803732377691/IMG_8189.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-037",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 37,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      }
+    }
   },
   {
-    "id": "moon_031",
-    "name": "LunaMoonie3D",
-    "rarity": "Legendary",
-    "type": "Moonie",
-    "description": "Luna during her 3D debut stream!!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480745085518745640/output-onlinetools_1.png"
+    "id": "ms1_038",
+    "name": "Luna Witchie",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "Brewing spells and probably chaos.",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495139802503319774/IMG_8190.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-038",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 38,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "fanart"
+      ]
+    }
   },
   {
-    "id": "moon_032",
-    "name": "Xeroc",
-    "rarity": "Rare",
-    "type": "Active Member",
-    "description": "Hiya Best Buddy! It's Xeroc!!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480745087746183198/output-onlinetools_3.png"
+    "id": "ms1_039",
+    "name": "Render Moonie",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "Fresh out of the pipeline and into your collection.",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495139804982018053/IMG_8188.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-039",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 39,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "fanart"
+      ]
+    }
   },
   {
-    "id": "moon_033",
-    "name": "Dragneelious",
-    "rarity": "Rare",
-    "type": "Magical Girl",
-    "description": "Usually asleep, it's Dragneelious!!",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480745089205538927/output-onlinetools_2.png"
-  },
-  {
-    "id": "moon_034",
-    "name": "PooPoo",
-    "rarity": "Rare",
-    "type": "Mascot",
-    "description": "A professional troublemaker and part-time stream assistant. He does what he wants.",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480745086563123271/output-onlinetools_4.png"
-  },
-  {
-    "id": "moon_035",
-    "name": "Yume Kuma",
-    "rarity": "Rare",
-    "type": "Mascot",
-    "description": "A collectable Mooniemon card of the soft, sleepy, and slightly chaotic mascot.",
-    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1480745084348665878/output-onlinetools_5.png"
+    "id": "ms1_040",
+    "name": "Luna Cheesie",
+    "rarity": "Common",
+    "type": "Fanart",
+    "description": "Say cheese! No seriously… where did the cheese go?",
+    "image_url": "https://media.discordapp.net/attachments/1480351810861666505/1495139806181720237/IMG_8187.png",
+    "base_hp": 100,
+    "current_hp": 100,
+    "is_holo": false,
+    "variant_key": "standard",
+    "metadata": {
+      "original_csv_id": "MS1-Common-040",
+      "series": "Moonlight Set",
+      "set_code": "MS1",
+      "card_number": 40,
+      "credits": {
+        "art_by": "",
+        "comm_by": "",
+        "created_by": "Keeb"
+      },
+      "tags": [
+        "fanart"
+      ]
+    }
   }
 ]
