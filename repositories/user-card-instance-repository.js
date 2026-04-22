@@ -63,6 +63,80 @@ async function getCollectionSummary(guildUserId) {
   }));
 }
 
+async function getCollectionStats(guildUserId) {
+  const result = await query(
+    `SELECT
+        COUNT(uci.id)::int AS total_copies,
+        COUNT(DISTINCT uci.card_id)::int AS unique_cards
+     FROM user_card_instances uci
+     WHERE uci.guild_user_id = $1`,
+    [guildUserId]
+  );
+
+  const row = result.rows[0] || {};
+  return {
+    totalCopies: row.total_copies || 0,
+    uniqueCards: row.unique_cards || 0
+  };
+}
+
+async function getFavoriteCardForUser(guildUserId) {
+  const result = await query(
+    `SELECT
+        c.id AS card_db_id,
+        c.external_card_id,
+        c.name,
+        c.rarity,
+        c.type,
+        c.description,
+        c.image_url,
+        c.base_hp,
+        c.current_hp,
+        c.is_holo,
+        c.variant_key,
+        COUNT(uci.id)::int AS copy_count
+     FROM user_card_instances uci
+     INNER JOIN cards c ON c.id = uci.card_id
+     WHERE uci.guild_user_id = $1
+     GROUP BY c.id
+     ORDER BY copy_count DESC,
+       CASE c.rarity
+         WHEN 'Legendary' THEN 5
+         WHEN 'Epic' THEN 4
+         WHEN 'Rare' THEN 3
+         WHEN 'Uncommon' THEN 2
+         WHEN 'Common' THEN 1
+         ELSE 0
+       END DESC,
+       c.name ASC,
+       c.id ASC
+     LIMIT 1`,
+    [guildUserId]
+  );
+
+  const row = result.rows[0];
+  if (!row) {
+    return null;
+  }
+
+  return {
+    card: {
+      dbId: row.card_db_id,
+      id: row.external_card_id,
+      name: row.name,
+      rarity: row.rarity,
+      type: row.type,
+      description: row.description,
+      image_url: row.image_url,
+      base_hp: row.base_hp,
+      current_hp: row.current_hp,
+      is_holo: row.is_holo,
+      variant_key: row.variant_key
+    },
+    count: row.copy_count
+  };
+}
+
 function mapInstance(row) {
   return {
     id: row.id,
@@ -77,5 +151,7 @@ function mapInstance(row) {
 module.exports = {
   createUserCardInstance,
   countUserCopiesForCard,
-  getCollectionSummary
+  getCollectionSummary,
+  getCollectionStats,
+  getFavoriteCardForUser
 };
