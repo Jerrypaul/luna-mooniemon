@@ -5,8 +5,18 @@ const { getGuildSettings } = require('../repositories/guild-settings-repository'
 const { getCardsByGuildId, findCardsByGuildAndName } = require('../repositories/card-repository');
 const { getOrCreateGuildUser, updateLastPullAt } = require('../repositories/guild-user-repository');
 const { deletePullReminderByGuildUserId } = require('../repositories/pull-reminder-repository');
-const { createUserCardInstance, countUserCopiesForCard, getCollectionSummary } = require('../repositories/user-card-instance-repository');
-const { getTopProfilesByGuildId } = require('../repositories/leveling-repository');
+const {
+  createUserCardInstance,
+  countUserCopiesForCard,
+  getCollectionSummary,
+  getCollectionStats,
+  getFavoriteCardForUser
+} = require('../repositories/user-card-instance-repository');
+const {
+  getOrCreateLevelingProfile,
+  getTopProfilesByGuildId
+} = require('../repositories/leveling-repository');
+const { getMinecraftLink } = require('../repositories/minecraft-link-repository');
 
 async function requireGuildContext(interaction) {
   if (!interaction.guildId) {
@@ -117,6 +127,55 @@ async function getLeaderboardDataForInteraction(interaction, limit = 10) {
   };
 }
 
+async function getProfileDataForInteraction(interaction, targetUser, targetMember) {
+  const guild = await requireGuildContext(interaction);
+  if (!guild) {
+    return null;
+  }
+
+  const selectedUser = targetUser || interaction.user;
+  const guildUser = await getOrCreateGuildUser(guild.id, selectedUser.id, selectedUser.username);
+  const levelingProfile = await getOrCreateLevelingProfile(guild.id, selectedUser.id, selectedUser.username);
+  const [settings, collectionStats, favoriteCard, minecraftLink] = await Promise.all([
+    getGuildSettings(guild.id),
+    getCollectionStats(guildUser.id),
+    getFavoriteCardForUser(guildUser.id),
+    getMinecraftLink(selectedUser.id)
+  ]);
+
+  const cooldownResult = getCooldownResult(guildUser.lastPullAt, settings.pullCooldownMs, new Date());
+  const displayName = targetMember?.displayName || selectedUser.globalName || selectedUser.username;
+  const avatarUrl = targetMember?.displayAvatarURL({ size: 256 }) || selectedUser.displayAvatarURL({ size: 256 });
+
+  return {
+    status: 'ok',
+    guild,
+    user: {
+      id: selectedUser.id,
+      username: selectedUser.username,
+      displayName,
+      avatarUrl
+    },
+    leveling: {
+      level: levelingProfile.level,
+      xp: levelingProfile.xp
+    },
+    collection: {
+      totalCopies: collectionStats.totalCopies,
+      uniqueCards: collectionStats.uniqueCards,
+      favoriteCard
+    },
+    minecraftLink,
+    cooldown: cooldownResult.ready
+      ? { ready: true, text: 'Ready now' }
+      : {
+          ready: false,
+          text: cooldownResult.remainingText,
+          readyAt: cooldownResult.readyAt
+        }
+  };
+}
+
 function chooseViewCard(cards) {
   return [...cards].sort((left, right) => {
     if (left.is_holo !== right.is_holo) {
@@ -152,5 +211,6 @@ function getCooldownResult(lastPullAt, cooldownMs, now) {
 module.exports = {
   pullCardForInteraction,
   getViewDataForInteraction,
-  getLeaderboardDataForInteraction
+  getLeaderboardDataForInteraction,
+  getProfileDataForInteraction
 };
